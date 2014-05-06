@@ -21,7 +21,7 @@ public class RomanTest {
     @Test(expected=Exception.class)
     public void minusOneShouldFail(){
         nr(-1);
-        assertEquals(roman.toString(), "I");
+        assertEquals(roman.toString(), "");
     }
         
     @Test

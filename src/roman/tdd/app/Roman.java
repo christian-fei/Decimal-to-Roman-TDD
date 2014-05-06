@@ -9,7 +9,6 @@ import org.junit.Before;
 
 public class Roman {    
     private int decimal;
-    private int reduced;
     
     // {{}} initilization http://www.c2.com/cgi/wiki?DoubleBraceInitialization
     // order is important for the reduce process
@@ -30,16 +29,20 @@ public class Roman {
     }};
     
     public Roman(int decimal) throws Exception{
-        if( decimal < 0 || decimal > 3999 ){ throw new Exception("Romans would be mad. Number must be between 0 and 3999");}
+        if( !isValidDecimal(decimal)){ throw new Exception("Romans would be mad. Number must be between 0 and 3999");}
         this.decimal = decimal;
     }
     
-    private String reduce(){
-        this.reduced = this.decimal;
+    private boolean isValidDecimal(int decimal){
+    	return decimal > 0 && decimal < 3999;
+    }
+    
+    private String calculateRoman(){
+        int remainder = this.decimal;
         String roman = "";
         for( Entry<Integer, String> entry : decimalRomanMap.entrySet() ){
-            while( reduced >= entry.getKey() ){
-                reduced -= entry.getKey();
+            while( remainder >= entry.getKey() ){
+            	remainder -= entry.getKey();
                 roman += entry.getValue();
             }
         }
@@ -48,7 +51,6 @@ public class Roman {
     
     public String toString(){
         String roman = decimalRomanMap.get( this.decimal );
-        if( roman != null ) return roman;
-        return reduce();
+        return roman != null ? roman : calculateRoman();
     }
 }
